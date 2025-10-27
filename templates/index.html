@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NLLB Translator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h2>🌍 NLLB Multilingual Translator</h2>
+
+    <form method="POST" id="translateForm">
+        <div class="language-selectors">
+            <div>
+                <label for="src_lang">From:</label>
+                <select name="src_lang" id="src_lang">
+                    {% for name, code in languages.items() %}
+                        <option value="{{ code }}" {% if src_lang == code %}selected{% endif %}>{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label for="tgt_lang">To:</label>
+                <select name="tgt_lang" id="tgt_lang">
+                    {% for name, code in languages.items() %}
+                        <option value="{{ code }}" {% if tgt_lang == code %}selected{% endif %}>{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="translator-boxes">
+            <textarea name="text" placeholder="Enter text here..." required>{{ input_text }}</textarea>
+            <div class="output-box">
+                {% if translated_text %}
+                    {{ translated_text }}
+                {% else %}
+                    Translated text will appear here.
+                {% endif %}
+            </div>
+        </div>
+
+        <button type="submit">Translate</button>
+    </form>
+</div>
+</body>
+</html>
